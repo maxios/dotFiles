@@ -137,8 +137,8 @@ set_prompts() {
 
     PS1+="$reset$bold"
     PS1+="$orange\u"        # Username
-    PS1+="$white@"
-    PS1+="$yellow\h"        # Host
+    PS1+="$white"
+    # PS1+="$yellow\h"        # Host
     PS1+="$white: "
     PS1+="$green\w"         # Working directory
     PS1+="\$(get_git_repository_details \"$white on $cyan\")"
