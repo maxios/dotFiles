@@ -4,18 +4,18 @@
 
 enable_color_support() {
 
-    if [[ $COLORTERM == gnome-* && $TERM == xterm ]] \
-        && infocmp gnome-256color &> /dev/null; then
-        export TERM="gnome-256color"
-    elif infocmp xterm-256color &> /dev/null; then
-        export TERM="xterm-256color"
-    fi
+#    if [[ $COLORTERM == gnome-* && $TERM == xterm ]] \
+#        && infocmp gnome-256color &> /dev/null; then
+#        export TERM="gnome-256color"
+#    elif infocmp xterm-256color &> /dev/null; then
+#        export TERM="xterm-256color"
+#    fi
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     # Load OS specific color support.
 
-    . "colors/$OS/bash_colors"
+    . ".bash_colors"
 
 }
 
@@ -136,11 +136,11 @@ set_prompts() {
                             # current working directory)
 
     PS1+="$reset$bold"
-    PS1+="$orange\u"        # Username
-    PS1+="$white"
+    #PS1+="$orange\u"        # Username
+    #PS2+="$white"
     # PS1+="$yellow\h"        # Host
-    PS1+="$white: "
-    PS1+="$green\w"         # Working directory
+    #PS2+="$white: "
+    PS1+="$orange\w"         # Working directory
     PS1+="\$(get_git_repository_details \"$white on $cyan\")"
     PS1+="\n"
     PS1+="\[$reset\]\[$white\]$ \[$reset\]"
