@@ -4,10 +4,19 @@ Plug 'AlessandroYorba/Sierra'
 Plug 'iCyMind/NeoSolarized'
 Plug 'cseelus/vim-colors-lucid'
 Plug 'AlessandroYorba/Alduin'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'edkolev/tmuxline.vim'
+Plug 'tpope/vim-fugitive'
 Plug 'rakr/vim-one'
+Plug 'romgrk/winteract.vim'
+Plug 'joeytwiddle/sexy_scroller.vim'
+Plug 'mhartington/oceanic-next'
+Plug 'vim-airline/vim-airline'
+Plug 'dart-lang/dart-vim-plugin'
+Plug 'leafgarland/typescript-vim'
+Plug 'mhartington/nvim-typescript'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'posva/vim-vue'
+Plug 'othree/html5.vim'
+Plug 'edkolev/tmuxline.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'crusoexia/vim-javascript-lib'
 Plug 'mxw/vim-jsx'
@@ -52,14 +61,38 @@ call plug#end()
 " clipboard
 set clipboard+=unnamedplus
 set pastetoggle=<F2>
+
+" to have html rules of vue files and keep the vue heighliting
+set ft=html
 " color
-set termguicolors
+syntax on
+let g:airline_theme='one'
 let g:sierra_Sunset = 1
-colorscheme sierra
+let g:one_allow_italics = 1
+let g:oceanic_next_terminal_bold = 1
+let g:oceanic_next_terminal_italic = 1
+set termguicolors
 "let g:alduin_Shout_Fire_Breath = 1
+"colorscheme sierra
 "colorscheme alduin
 "colorscheme NeoSolarized
+colorscheme one
+"colorscheme OceanicNext
 set background=dark
+
+if (empty($TMUX))
+  if (has("nvim"))
+  "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  endif
+  "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+  "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+  if (has("termguicolors"))
+    set termguicolors
+  endif
+endif
+
 "change VertSpit color of colorscheme `one`
 hi VertSplit guifg=#1b1b24 guibg=#707070 guisp=#707070 gui=bold
 " airline
@@ -75,8 +108,9 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline_exclude_preview = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 
-let g:python_host_prog = '/full/path/to/neovim2/bin/python'
-let g:python3_host_prog = '/full/path/to/neovim3/bin/python'
+let g:python_host_prog = '/usr/bin/python'
+let g:python3_host_prog = '/usr/bin/python3'
+
 " disable arrow keys
 noremap <Up> <NOP>
 noremap <Down> <NOP>
@@ -106,6 +140,9 @@ unlet s:printable_ascii s:char
 "set cursorline
 set splitbelow
 set splitright
+
+"no wrap
+set nowrap
 " jsx
 let g:jsx_ext_required = 0
 " NERDTree
@@ -119,11 +156,15 @@ if executable('ag')
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
   " ag is fast enough that CtrlP doesn't need to cache
   let g:ctrlp_use_caching = 0
+
 endif
 " bind K to grep word under cursor
 nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 " bind // for search visual selection
-vnoremap // y/<C-R>"<CR>
+vnoremap  <leader>y  "+y
+nnoremap  <leader>Y  "+yg_
+nnoremap  <leader>y  "+y
+nnoremap  <leader>yy  "+yy
 " Use deoplete
 let g:deoplete#enable_at_startup = 1
 "let g:deoplete#disable_auto_complete = 1
@@ -162,6 +203,7 @@ let g:EasyMotion_startofline = 0 "keep cursor column when JK motion
 let g:EasyMotion_smartcase = 1
 map <Leader>f <Plug>(easymotion-s)
 nmap <Leader>s <Plug>(easymotion-overwin-f2)
+nmap gw :InteractiveWindow<CR>
 map <Leader>/ <Plug>(easymotion-sn)
 map <Leader>n <Plug>(easymotion-next)
 map <Leader>N <Plug>(easymotion-prev)
@@ -296,6 +338,7 @@ map <silent> <Leader>sc :call RunCurrentSpecFile()<cr>:copen<cr>
 map <silent> <Leader>sn :call RunNearestSpec()<cr>
 map <silent> <Leader>sl :call RunLastSpec()<cr>
 map <silent> <Leader>sa :call RunAllSpecs()<cr>
+vnoremap  <leader>y +y
 let g:rspec_command = "AsyncRun rspec {spec}"
 
 " Toggle number display
@@ -329,6 +372,14 @@ let delimitMate_expand_space = 1
 let g:go_fmt_command = "goimports"
 let g:neomake_go_gometalinter_args = []
 let g:go_autodetect_gopath = 1
+
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
+
+let g:SexyScroller_EasingStyle = 3
+let g:SexyScroller_ScrollTime = 20
+let g:SexyScroller_CursorTime = 80
+
+
 au FileType go let $GOPATH = go#path#Detect()
 
 set t_ut=
