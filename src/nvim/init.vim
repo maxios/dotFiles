@@ -28,6 +28,7 @@ Plug 'tpope/vim-haml'
 Plug 'tpope/vim-bundler'
 "Plug 'wakatime/vim-wakatime'
 Plug 'airblade/vim-gitgutter'
+Plug 'rking/ag.vim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 "Plug 'flowtype/vim-flow'
 "Plug 'steelsojka/deoplete-flow'
@@ -57,11 +58,17 @@ Plug 'rhysd/vim-grammarous'
 Plug 'fatih/vim-go'
 Plug 'zchee/deoplete-go', { 'do': 'make'}
 Plug 'chaoren/vim-wordmotion'
+Plug 'reisub0/hot-reload.vim'
+Plug 'dart-lang/dart-vim-plugin'
+
 call plug#end()
 " clipboard
 set clipboard+=unnamedplus
 set pastetoggle=<F2>
 
+"dart flutter configuration
+let dart_format_on_save = 1
+let dart_style_guide = 2
 " to have html rules of vue files and keep the vue heighliting
 set ft=html
 " color
@@ -110,6 +117,10 @@ let g:airline#extensions#tabline#buffer_nr_show = 1
 
 let g:python_host_prog = '/usr/bin/python'
 let g:python3_host_prog = '/usr/bin/python3'
+
+"silver searcher
+let g:ag_working_path_mode="r"
+let g:ackprg = 'ag --vimgrep'
 
 " disable arrow keys
 noremap <Up> <NOP>
